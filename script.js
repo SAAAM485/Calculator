@@ -32,12 +32,12 @@ const secondLine = document.querySelector(".secondLine");
 const thirdLine = document.querySelector(".thirdLine");
 const currentLine = document.querySelector(".currentLine");
 
-currentLine.innerHTML = "0";
 let numArr = [];
 let opArr = [];
 let tempNum = "";
 let tempOp = "";
-let displayLine = "";
+let displayLine = "0";
+currentLine.innerHTML = displayLine;
 let newCal = true;
 let answer;
 
@@ -61,7 +61,7 @@ opPad.forEach(op => {
             currentLine.innerHTML = displayLine;
         } else if (tempNum === "" && tempOp !== "") {
             tempOp = op.innerHTML;
-            displayLine = displayLine.slice(0, -1) + " " + tempOp + " ";
+            displayLine = displayLine.slice(0, -3) + " " + tempOp + " ";
             currentLine.innerHTML = displayLine;
         }
     })
@@ -80,8 +80,8 @@ numPad.forEach(num => {
             currentLine.innerHTML = displayLine;
             newCal = true;
         }
-        
-        if (num.innerHTML === "0" && (tempNum.indexOf("0") === 0 && tempNum.indexOf(".") === -1 )) {
+
+        if (displayLine === "0" && (tempNum.indexOf("0") === 0 && tempNum.indexOf(".") === -1 )) {
             return;
         }
         
@@ -101,7 +101,7 @@ numPad.forEach(num => {
 
 const dotPad = document.querySelector(".dot");
 dotPad.addEventListener("click", () => {
-    if (tempNum.indexOf(".") > -1) {
+    if (tempNum.indexOf(".") > -1 || tempOp !== "") {
         return;
     } else if (displayLine === "") {
         tempNum = "0.";
@@ -149,11 +149,12 @@ const bsPad = document.querySelector(".backspace");
 bsPad.addEventListener("click", () => { 
     if (tempNum === "" && newCal === true) {
         opArr.pop();
-        displayLine = displayLine.slice(0, -1);
-        currentLine.innerHTML = displayLine;
     } else if (newCal === true) {
         tempNum = tempNum.slice(0, -1);
-        displayLine = displayLine.slice(0, -1);
-        currentLine.innerHTML = displayLine;
     }
+    displayLine = displayLine.slice(0, -1);
+    if (displayLine === "") {
+        displayLine = "0";
+    }
+    currentLine.innerHTML = displayLine;
 })
