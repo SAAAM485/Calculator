@@ -33,3 +33,14 @@ body {
     padding: 60px;
     flex-shrink: 0;
 }
+
+.display {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    padding: 300px;
+}
+
+.currentLine {
+    
+}
