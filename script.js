@@ -36,8 +36,8 @@ let numArr = [];
 let opArr = [];
 let tempNum = "";
 let tempOp = "";
-let displayLine = "0";
-currentLine.innerHTML = displayLine;
+let displayLine = "";
+currentLine.innerHTML = "0";
 let newCal = true;
 let answer;
 
@@ -145,16 +145,178 @@ clrPad.addEventListener("click", () => {
     newCal = true;
 })
 
-const bsPad = document.querySelector(".backspace");
-bsPad.addEventListener("click", () => { 
-    if (tempNum === "" && newCal === true) {
-        opArr.pop();
-    } else if (newCal === true) {
+const bsPad = document.querySelector(".delete");
+bsPad.addEventListener("click", () => {
+    if (newCal === false) {
+        return;
+    }
+ 
+    if (tempNum === "" && tempOp !== "") {
+        tempOp = "";
+        displayLine = displayLine.slice(0, -3);
+        currentLine.innerHTML = displayLine;
+        return;
+    } else if (tempNum !== "" && tempOp === "") {
         tempNum = tempNum.slice(0, -1);
+        displayLine = displayLine.slice(0, -1);
+        currentLine.innerHTML = displayLine;
+        if (displayLine === "") {
+            currentLine.innerHTML = "0";
+        }
+        return;
+    } else if (tempNum === "" && tempOp === ""){
+        if (numArr[numArr.length - 1] === undefined) {
+            currentLine.innerHTML = "0";
+            return;
+        } else if (opArr[opArr.length - 1] !== undefined){
+            opArr.pop();
+            displayLine = displayLine.slice(0, -3);
+            currentLine.innerHTML = displayLine;
+            return;
+        } else {
+            tempNum = numArr[numArr.length - 1];
+            numArr.pop();
+            tempNum = tempNum.slice(0, -1);
+            displayLine = displayLine.slice(0, -1);
+            console.log(displayLine);
+            currentLine.innerHTML = displayLine;
+            return;
+        }
     }
-    displayLine = displayLine.slice(0, -1);
-    if (displayLine === "") {
-        displayLine = "0";
+})
+
+document.addEventListener("keypress", (event) => {
+    console.log(event.key);
+    if (event.key === "+" ||
+        event.key === "-" ||
+        event.key === "*" ||
+        event.key === "/") {
+            if (newCal === false) {
+                firstLine.innerHTML = secondLine.innerHTML;
+                secondLine.innerHTML = thirdLine.innerHTML;
+                thirdLine.innerHTML = currentLine.innerHTML;
+                displayLine = tempNum;
+                currentLine.innerHTML = displayLine;
+                newCal = true;
+            }
+
+            let key;
+
+            switch (event.key) {
+                case "+":
+                    key = "+";
+                    break;
+                case "-":
+                    key = "-";
+                    break;
+                case "*":
+                    key = "×";
+                    break;
+                case "/":
+                    key = "÷";
+                    break;
+            }
+
+            if (tempNum !== "" && tempOp === "") {
+                numArr.push(tempNum);
+                tempNum = "";
+                tempOp = key;
+                displayLine = displayLine + " " + tempOp + " ";
+                currentLine.innerHTML = displayLine;
+            } else if (tempNum === "" && tempOp !== "") {
+                tempOp = key;
+                displayLine = displayLine.slice(0, -3) + " " + tempOp + " ";
+                currentLine.innerHTML = displayLine;
+            }
+    } else if (parseInt(event.key) >= 0 && parseInt(event.key) <= 9) {
+        if (newCal === false) {
+            firstLine.innerHTML = secondLine.innerHTML;
+            secondLine.innerHTML = thirdLine.innerHTML;
+            thirdLine.innerHTML = currentLine.innerHTML;
+            tempNum = "";
+            console.log(tempNum);
+            displayLine = tempNum;
+            currentLine.innerHTML = displayLine;
+            newCal = true;
+        }
+
+        if (displayLine === "0" && (tempNum.indexOf("0") === 0 && tempNum.indexOf(".") === -1 )) {
+            return;
+        }
+        
+        if (tempOp === "") {
+            tempNum = tempNum + event.key;
+            displayLine = displayLine + event.key;
+            currentLine.innerHTML = displayLine;
+        } else if (tempOp !== "") {
+            opArr.push(tempOp);
+            tempOp = "";
+            tempNum = tempNum + event.key;
+            displayLine = displayLine + event.key;
+            currentLine.innerHTML = displayLine;
+        }
+    } else if (event.key ===".") {
+        if (tempNum.indexOf(".") > -1 || tempOp !== "") {
+            return;
+        } else if (displayLine === "") {
+            tempNum = "0.";
+            displayLine = tempNum;
+            currentLine.innerHTML = displayLine;
+        } else {
+            tempNum = tempNum + ".";
+            displayLine = displayLine + ".";
+            currentLine.innerHTML = displayLine;
+        }
+    } else if (event.key === "=" || event.key === "Enter") {
+        if (currentLine.innerHTML !== "0") {
+            numArr.push(tempNum);
+            tempNum = operate(numArr, opArr);
+            numArr = [];
+            opArr = [];
+            tempOp = "";
+            newCal = false;
+            displayLine = "= " + tempNum;
+            firstLine.innerHTML = secondLine.innerHTML;
+            secondLine.innerHTML = thirdLine.innerHTML;
+            thirdLine.innerHTML = currentLine.innerHTML;
+            currentLine.innerHTML = displayLine;
+        }
+    } else if (event.key === "Delete") {
+        if (newCal === false) {
+            return;
+        }
+    
+        if (tempNum === "" && tempOp !== "") {
+            tempOp = "";
+            displayLine = displayLine.slice(0, -3);
+            currentLine.innerHTML = displayLine;
+            return;
+        } else if (tempNum !== "" && tempOp === "") {
+            tempNum = tempNum.slice(0, -1);
+            displayLine = displayLine.slice(0, -1);
+            currentLine.innerHTML = displayLine;
+            if (displayLine === "") {
+                currentLine.innerHTML = "0";
+            }
+            return;
+        } else if (tempNum === "" && tempOp === ""){
+            if (numArr[numArr.length - 1] === undefined) {
+                currentLine.innerHTML = "0";
+                return;
+            } else if (opArr[opArr.length - 1] !== undefined){
+                opArr.pop();
+                displayLine = displayLine.slice(0, -3);
+                currentLine.innerHTML = displayLine;
+                return;
+            } else {
+                tempNum = numArr[numArr.length - 1];
+                numArr.pop();
+                tempNum = tempNum.slice(0, -1);
+                displayLine = displayLine.slice(0, -1);
+                console.log(displayLine);
+                currentLine.innerHTML = displayLine;
+                return;
+            }
+        }
     }
-    currentLine.innerHTML = displayLine;
 })
