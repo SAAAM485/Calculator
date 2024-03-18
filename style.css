@@ -34,13 +34,35 @@ body {
     flex-shrink: 0;
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .display {
     display: flex;
     flex-direction: column;
     text-align: right;
-    padding: 300px;
+    padding: 200px 40px;
 }
 
 .currentLine {
-    
+    font-weight: bold;
+}
+
+.keypad {
+    padding: 200px;
+}
+
+button {
+    text-align: center;
+    height: 50px;
+    width: 50px;
+    padding: 10px;
+    margin: 2px;
+}
+
+.clearRow button {
+    width: 108px;
 }
