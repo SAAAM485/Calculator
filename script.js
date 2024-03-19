@@ -297,7 +297,7 @@ document.addEventListener("keypress", (event) => {
             currentLine.innerHTML = displayLine;
             if (displayLine === "") {
                 currentLine.innerHTML = "0";
-            }77
+            }
             return;
         } else if (tempNum === "" && tempOp === ""){
             if (numArr[numArr.length - 1] === undefined) {

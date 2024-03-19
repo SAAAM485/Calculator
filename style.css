@@ -4,6 +4,7 @@ html, body {
 }
 
 body {
+    background-color: #ebebeb5b;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -32,37 +33,141 @@ body {
     align-items: center;
     padding: 60px;
     flex-shrink: 0;
+    width: 100%;
 }
 
 .container {
     display: flex;
+    flex-grow: 1;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .display {
     display: flex;
     flex-direction: column;
     text-align: right;
-    padding: 200px 40px;
+    width: 300px;
+    padding: 50px;
+    background-color: #FFFFFF;
+    margin-bottom: -199.8px;
+    height:72px;
+}
+
+.firstLine {
+    opacity: 0.2;
+}
+
+.secondLine {
+    opacity: 0.4;
+}
+
+.thirdLine {
+    opacity: 0.6;
 }
 
 .currentLine {
     font-weight: bold;
+    font-size: 20px;
 }
 
 .keypad {
+    width: 400px;
     padding: 200px;
 }
 
-button {
-    text-align: center;
-    height: 50px;
-    width: 50px;
-    padding: 10px;
-    margin: 2px;
+.clearRow {
+    display: flex;
 }
 
-.clearRow button {
-    width: 108px;
+.firstRow {
+    display: flex;
+}
+
+.secondRow {
+    display: flex;
+}
+
+.thirdRow {
+    display: flex;
+}
+
+.fourthRow {
+    display: flex;
+}
+
+button {
+    appearance: none;
+    background-color: #FFFFFF;
+    border-width: 0;
+    box-sizing: border-box;
+    color: #000000;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Clarkson,Helvetica,sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1em;
+    margin: 0.2px;
+    opacity: 1;
+    outline: 0;
+    padding: 30px 30px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-rendering: geometricprecision;
+    text-transform: uppercase;
+    transition: opacity 300ms cubic-bezier(.694, 0, 0.335, 1),background-color 100ms cubic-bezier(.694, 0, 0.335, 1),color 100ms cubic-bezier(.694, 0, 0.335, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    white-space: nowrap;   
+    width: 100%;
+}
+
+.operator {
+    font-size: 18px;
+}
+
+.equal {
+    font-size: 18px;
+}
+
+.dot {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+button:before {
+    animation: opacityFallbackOut .5s step-end forwards;
+    backface-visibility: hidden;
+    background-color: #EBEBEB;
+    clip-path: polygon(-1% 0, 0 0, -25% 100%, -1% 100%);
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transform: translateZ(0);
+    transition: clip-path .5s cubic-bezier(.165, 0.84, 0.44, 1), -webkit-clip-path .5s cubic-bezier(.165, 0.84, 0.44, 1);
+    width: 100%;
+    opacity: 0.4;
+}
+
+button:hover:before {
+    animation: opacityFallbackIn 0s step-start forwards;
+    clip-path: polygon(0 0, 101% 0, 101% 101%, 0 101%);
+    opacity: 0.4;
+}
+
+button:after {
+    background-color: #FFFFFF;
+}
+
+button span {
+  z-index: 1;
+  position: relative;
 }
