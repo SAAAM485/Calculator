@@ -75,6 +75,7 @@ body {
 .keypad {
     width: 400px;
     padding: 200px;
+    margin-bottom: -180Px;
 }
 
 .clearRow {
